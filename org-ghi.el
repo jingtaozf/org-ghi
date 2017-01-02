@@ -148,6 +148,7 @@ result and updates the TODO list."
                                (find-file-noselect p))
         (save-excursion
           (save-restriction
+            (message "%s" (mm-decode-string (buffer-string) 'utf-8))
             (org-mode)
             (org-content)
             (mapc 'org-ghi-insert-or-update-issue issues)))))))
@@ -477,6 +478,10 @@ result and updates the TODO list."
                                 (concat github-user "/"))))
   (org-ghi-list repo "open")
   (org-ghi-list repo "closed")
+  ;; (let ((decoded-text (decode-coding-string (buffer-string) 'utf-8)))
+  ;;   (delete-region (point-min) (point-max))
+  ;;   (insert decoded-text))
+
   (save-buffer)
   (message "Sync-ed all issues for %s" repo))
 
